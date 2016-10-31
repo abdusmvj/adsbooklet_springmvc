@@ -1,0 +1,26 @@
+package com.app.adsbooklet.model;
+
+public class SubCategory {
+	private int id;
+	private int mainCategoryId;
+	private String name;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public int getMainCategoryId() {
+		return mainCategoryId;
+	}
+	public void setMainCategoryId(int mainCategoryId) {
+		this.mainCategoryId = mainCategoryId;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+}

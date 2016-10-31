@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE tiles-definitions PUBLIC  
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"  
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">  
+<tiles-definitions>  
+   <definition name="base.definition"  
+        template="/WEB-INF/views/layout.jsp">  
+        <put-attribute name="title" value="" />  
+        <put-attribute name="header" value="/WEB-INF/views/header.jsp" />
+         <put-attribute name="titlebar" value="/WEB-INF/views/titlebar.jsp" />  
+        <put-attribute name="menu" value="/WEB-INF/views/menu.jsp" />  
+        <put-attribute name="body" value="" />  
+        <put-attribute name="footer" value="/WEB-INF/views/footer.jsp" />  
+    </definition>  
+  
+    <definition name="hello" extends="base.definition">  
+        <put-attribute name="title" value="Contactvv Manager" />  
+        <put-attribute name="body" value="/WEB-INF/views/hello.jsp" />  
+    </definition>  
+  
+  <definition name="contact" extends="base.definition">  
+        <put-attribute name="title" value="Contact Manager" />  
+        <put-attribute name="body" value="/WEB-INF/views/contact.jsp" />  
+    </definition>
+<definition name="homepage" extends="base.definition">  
+        <put-attribute name="title" value="Contact Manager" /> 
+          <put-attribute name="titlebar" value="/WEB-INF/views/titlebar.jsp" />
+        <put-attribute name="body" value="/WEB-INF/views/home.jsp" />  
+    </definition>
+ <!-- <definition name="register" extends="base.definition">  
+        <put-attribute name="title" value="Register page View" />  
+        <put-attribute name="body" value="/WEB-INF/views/register.jsp" />  
+    </definition>  -->
+    
+    <definition name="register" extends="base.definition">  
+        <put-attribute name="title" value="Register page View" />  
+        <put-attribute name="body" value="/WEB-INF/views/signup.jsp" />  
+    </definition> 
+    
+    <definition name="forgotPasswordview" extends="base.definition2">  
+        <put-attribute name="title" value="Register page View" />  
+        <put-attribute name="body" value="/WEB-INF/views/forgotpassword.jsp" />  
+    </definition>
+    <definition name="registersuccess" extends="base.definition">  
+        <put-attribute name="title" value="Registersuccess page View" />  
+        <put-attribute name="body" value="/WEB-INF/views/registersuccess.jsp" />  
+    </definition>
+   
+   
+     <definition name="contactusview" extends="base.definition">  
+        <put-attribute name="title" value="Contactus page View" />  
+        <put-attribute name="body" value="/WEB-INF/views/contactus.jsp" />  
+    </definition>
+ 
+ <definition name="signinview" extends="base.definition">  
+        <put-attribute name="title" value="Sign in page View" />  
+        <put-attribute name="body" value="/WEB-INF/views/signin.jsp" />  
+    </definition> 
+    
+    <definition name="postadsview" extends="base.definition">  
+        <put-attribute name="title" value="Post Adds page View" />  
+        <put-attribute name="menu" value="/WEB-INF/views/postadsview.jsp" />  
+    </definition>
+    
+    <definition name="my_mobile_posts" extends="base.definition">  
+        <put-attribute name="title" value="Mobile Posted Information" />  
+        <put-attribute name="body" value="/WEB-INF/views/my_mobile_posts.jsp" />  
+    </definition>
+    
+    <definition name="show_subcat_list" extends="base.definition">  
+        <put-attribute name="title" value="Post Adds page View" />
+        <put-attribute name="menu" value="/WEB-INF/views/postadsview.jsp" />  
+        <put-attribute name="body" value="/WEB-INF/views/show_subcat_list.jsp" />  
+    </definition>
+    
+    <definition name="base.definition2"  template="/WEB-INF/views/layout.jsp">  
+        <put-attribute name="title" value="" />  
+        <put-attribute name="header" value="/WEB-INF/views/header.jsp" />
+         <put-attribute name="titlebar" value="/WEB-INF/views/titlebar.jsp" />  
+        <put-attribute name="menu" value="/WEB-INF/views/menu.jsp" />  
+        <put-attribute name="body" value="" />  
+        <put-attribute name="footer" value="/WEB-INF/views/footer.jsp" />  
+    </definition> 
+    
+    <definition name="signinview" extends="base.definition2">  
+        <put-attribute name="title" value="Sign in page View" />  
+        <put-attribute name="body" value="/WEB-INF/views/signin.jsp" />  
+    </definition> 
+    
+   <!-- Tile Left menu link action fire page -->
+   
+    <definition name="mobiletabletsview" extends="base.definition2">  
+        <put-attribute name="title" value="Mobiletablets View" />  
+        <put-attribute name="body" value="/WEB-INF/views/mobilestablet.jsp" />  
+    </definition>
+    
+    
+     <definition name="mobilephoneview" extends="base.definition2">  
+        <put-attribute name="title" value="Mobiletablets View" />  
+        <put-attribute name="body" value="/WEB-INF/views/mobilephone.jsp" />  
+    </definition>
+    
+   
+    <definition name="mobile_seller_buyerinfo" extends="base.definition">  
+        <put-attribute name="title" value="Mobiletablets View" />  
+        <put-attribute name="body" value="/WEB-INF/views/mobile_buyerseller.jsp" />  
+    </definition>
+    
+    
+     <definition name="post_sellerbuyer_view" extends="base.definition2">  
+        <put-attribute name="title" value="Mobiletablets View" />  
+        <put-attribute name="body" value="/WEB-INF/views/final_mobilephone_view.jsp" />  
+    </definition>
+</tiles-definitions>  
