@@ -1,21 +1,32 @@
 package com.app.adsbooklet.controllers;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URLConnection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.app.adsbooklet.dao.AdsbookletDao;
+import com.app.adsbooklet.dao.FileUploadDao;
 import com.app.adsbooklet.dao.MobilePostsDao;
 import com.app.adsbooklet.dao.UserPopulatedDao;
 import com.app.adsbooklet.model.CategoryList;
@@ -25,34 +36,37 @@ import com.app.adsbooklet.model.MobilePostedInfo;
 import com.app.adsbooklet.model.SellerBuyerInfo;
 import com.app.adsbooklet.model.SubCategory;
 import com.app.adsbooklet.model.UserDetails;
-//@Controller
+
 @Component
 @RequestMapping("/")
 public class MenuController 
 {
-	
-	@Autowired
-	UserPopulatedDao userPopulatedDao;
-	@Autowired
-    AdsbookletDao adsBookletDao;    //will inject dao from xml file 
+	private static final Logger logger = LoggerFactory
+			.getLogger(MenuController.class);
+	@Autowired JdbcTemplate jdbcTemplate;
+	@Autowired UserPopulatedDao userPopulatedDao;
+	@Autowired AdsbookletDao adsBookletDao;    //will inject dao from xml file 
 	
 	@Autowired MobilePostsDao mobilePostsDao;
 	
+	@Autowired FileUploadDao fileUploadDao;
 	
 	 @RequestMapping(value="/mobiles&tablets")  
 	    public ModelAndView showPostAddList() {  
 	        return new ModelAndView("mobiletabletsview" ,"command", null);  
 	    } 
 	 
-	 @RequestMapping(value="/mobilephone")  
+	 @RequestMapping(value="/mobilephone",method = RequestMethod.GET)  
 	    public ModelAndView showMobilePhone() {  
 		 List<MobileBrand> brandedlist = userPopulatedDao.getMobileBrandList();
 	       return new ModelAndView("mobilephoneview" ,"listbrand", brandedlist);  
 	    } 
 	 
 	 
-	 @RequestMapping(value="/postmobile_phoneads", method=RequestMethod.POST)  
-	    public ModelAndView saveMobilePhoneDetails(MobilePhone mp, HttpServletRequest req)
+	 
+	 
+	 @RequestMapping(value="/mobilephone", method=RequestMethod.POST)  
+	    public String saveMobilePhoneDetails(@RequestParam("file") MultipartFile file, MobilePhone mp, HttpServletRequest req)
 	   {	       
 		              System.out.println("hello Register");
 		              int userId = (int)req.getSession().getAttribute("user_id");
@@ -68,25 +82,37 @@ public class MenuController
 	    			 
 //	    			 mp.setSubCat(43);
 	    			 ModelAndView mv=new ModelAndView();
-	    	         adsBookletDao.saveMobilePhone(mp, userId);
+	    	         String post_id = adsBookletDao.saveMobilePhone(mp, userId);
 	    	         
-	    	        
-	    	         mv.addObject("myposts" , mobilePostsDao.getAll(userId));  //foe last row user id
-	    	         mv.setViewName("my_mobile_posts");
-	    	         return mv;
-	    	         //changes made from here call to next page
-	    	         //return "redirect:/mobile_sellerbuyer_info";
-	    	     /*    
+	    	         fileUploadDao.handleFormUpload(file, post_id);
 	    	         
-	    	         //mv.addObject("myposts" ,mobilePostsDao.getAll()); //for all value 
-	    	       //  return "redirect:/myMobilePosts";
+	    	         return "redirect:/viewPost/"+post_id;
 	    	        
-	    	        */
-			          
+	    	        			          
 	   } 
-	 @RequestMapping("/viewMyMobilePosts")
-	 public ModelAndView viewMyPost() {
+	 
+	 //this is  for Accessory controller link
+	 @RequestMapping(value="/accessories_form")  
+	    public ModelAndView showAccessoryForm() {  
+		  ModelAndView mv=new ModelAndView();
+		  mv.setViewName("accessory");
+	      // return new ModelAndView("accessory_form");  
+		  return mv;
+	    }
+	 
+	//this is  for tablets controller link
+		 @RequestMapping(value="/tablets_form")  
+		    public ModelAndView showTabletForm() {  
+			  ModelAndView mv=new ModelAndView();
+			  mv.setViewName("tablets");
+		     
+			  return mv;
+		    }
+	 
+	 @RequestMapping("/viewPost/{postId}")
+	 public ModelAndView viewMyPost(@PathVariable("postId") String postId) {
 		 ModelAndView mv = new ModelAndView();
+		 mv.addObject("post" , mobilePostsDao.getByAdId(postId));
 		 mv.setViewName("my_mobile_posts");
 		 return mv;
 	 }
@@ -97,7 +123,7 @@ public class MenuController
 		 mv.setViewName("mobile_seller_buyerinfo");
 		 return mv;
 	 }
-	 
+	 //this the caregory controller action list when click on this then subcateory list will be show  
 	 @RequestMapping("/show_details/{id}")
 	 public ModelAndView show_SibcatDeatils(@PathVariable("id") String subcatid) {
 		 //ModelAndView mv = new ModelAndView();
@@ -108,17 +134,35 @@ public class MenuController
 		// return mv;
 	 }
 	 
-	 @RequestMapping(value="/mobile_sellerbuyer_info", method=RequestMethod.POST)  
-	    public ModelAndView saveSellerBuyerDetails(MobilePostedInfo mpi, HttpServletRequest req)
-	   {	       		
-	    			 System.out.println("hello Register");
-	    			 int userId1 = (int)req.getSession().getAttribute("user_id");
-	    	         adsBookletDao.saveSellerBuyerInfo(mpi);
-	    	        
-	    	       //=adsBookletDao.getMobilePostedInfo();
-	    	       return new ModelAndView("my_mobile_posts","myposts", mobilePostsDao.getAll(userId1)); 
-	   } 
-	 
+	 @RequestMapping("/showImage/{post_id}")
+	 @ResponseBody
+	 public void downloadFile(@PathVariable("post_id") String post_id, HttpServletResponse response) {
+		 String filepath = jdbcTemplate.queryForObject("SELECT image FROM post_mobile_section WHERE mobile_adv_id = ?", new Object[] { post_id }, String.class);
+		 logger.info("filepath = "+ filepath);
+		 File file = new File(filepath);
+		 
+		 try {
+			FileInputStream inputStream = new FileInputStream(file);
+			String mimeType = URLConnection.guessContentTypeFromStream(inputStream);
+			response.setContentType(mimeType);
+			response.setContentLength((int) file.length());
+			byte[] buffer = new byte[4096];
+	        int bytesRead = -1;
+	         
+	        while ((bytesRead = inputStream.read(buffer)) != -1) {
+	            response.getOutputStream().write(buffer, 0, bytesRead);
+	        }
+	        inputStream.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			try {
+				response.getWriter().println("hello");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+	 }
 	 
 	 @ExceptionHandler(Exception.class)
 		public ModelAndView handleAllException(Exception ex) {

@@ -1,9 +1,41 @@
  <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+<!--  for success file upload msg -->
+ <div>   
+        <% String filesuccess =(String)request.getAttribute("msg-success");%>
+     <% if(filesuccess!=null)
+     {%>
+        <div class="alert alert-success disappear">
+            <strong>Success!</strong><%=filesuccess%>
+        </div>
+        <%request.removeAttribute("msg-success");}%>
+        
+</div> 
+
+
+ <!-- for fail file upload msg -->
+ <div>   
+        <% String filefail =(String)request.getAttribute("msg-fail");%>
+     <% if(filefail!=null)
+     {%>
+        <div class="alert alert-danger disappear">
+            <strong>Danger!</strong><%=filefail%>
+        </div>
+        <%request.removeAttribute("msg-fail");}%>
+        
+</div> 
+ <div class="container well" style="width: 600px;">
+	 
+ </div>
+ 
 <div class="container well" style="width: 600px;">
     <blockquote align="center">Post details about the Mobile below</blockquote>
    
-    <form action="postmobile_phoneads" method="post">
+    <form action="<c:url value="/mobilephone" />" method="post" enctype="multipart/form-data">
     
+    <div class="form-group">
+		<label>Upload Image file</label>
+		Select File:<input type="file" name="file">
+		</div>
      <div class="form-group">
             <label>Add Image</label>
             <input type="text" name="imageid" id="imageid"  class="form-control" placeholder="Enter image id" />            

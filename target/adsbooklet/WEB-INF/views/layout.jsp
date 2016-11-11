@@ -4,6 +4,7 @@
 "http://www.w3.org/TR/html4/loose.dtd">  
 <html>  
 <head>  
+<style type="text/css">@import url(http://fonts.googleapis.com/css?family=Montserrat);</style>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
 <title><tiles:insertAttribute name="title" ignore="true" /></title>  
 <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.css" />">

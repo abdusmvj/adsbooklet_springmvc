@@ -3,6 +3,7 @@ package com.app.adsbooklet.controllers;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,9 +71,16 @@ public class WelcomeHome {
 
 	
 	 @RequestMapping(value = "/postads")  
-	    public ModelAndView showPostAddList() {  
+	    public Object showPostAddList(HttpServletRequest request) { 
+		 HttpSession session =request.getSession();
+		 	if(session.getAttribute("username")==null)
+		 	{
+		 		session.setAttribute("fls-msg-user", "Please Login before Posting Your Add!");
+		 		return  "redirect:/signin";	
+		 	}
+		 	
 		    List<CategoryList> category_list=mobilePostsDao.getAllCategoryList();
-	        return new ModelAndView("postadsview" ,"cat_list",category_list);  
+	        return new ModelAndView("postadsview" ,"cat_list", category_list);  
 	    } 
 	 
 	  @RequestMapping(value ="/contactus")  

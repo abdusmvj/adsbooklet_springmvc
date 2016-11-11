@@ -14,6 +14,7 @@
    <context:component-scan base-package="com.app.adsbooklet.controllers" />
    <context:component-scan base-package="com.app.adsbooklet.dao" />
    <context:component-scan base-package="com.app.adsbooklet.services" />
+   <context:component-scan base-package="com.app.adsbooklet.util" />
     <mvc:resources mapping="/resources/**" location="/resources/" />
     <mvc:annotation-driven />
    <context:annotation-config></context:annotation-config>
@@ -31,6 +32,7 @@
         <property name="prefix" value="/WEB-INF/views/" />
         <property name="suffix" value=".jsp" />
    </bean>
+ 
    
     <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">  
         <property name="definitions">  
@@ -39,6 +41,10 @@
             </list>  
         </property>  
     </bean> 
+    
+    <!--   for uploading file --> 
+   <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+</bean>
     
     <import resource="dataSource.xml"/>
    <!--  <import resource="daoBeans.xml"/> -->

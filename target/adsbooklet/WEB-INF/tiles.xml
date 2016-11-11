@@ -57,8 +57,10 @@
         <put-attribute name="body" value="/WEB-INF/views/signin.jsp" />  
     </definition> 
     
+    <!-- posing view category list -->
+    
     <definition name="postadsview" extends="base.definition">  
-        <put-attribute name="title" value="Post Adds page View" />  
+        <put-attribute name="title" value="Post Adds Category View" />  
         <put-attribute name="menu" value="/WEB-INF/views/postadsview.jsp" />  
     </definition>
     
@@ -66,7 +68,8 @@
         <put-attribute name="title" value="Mobile Posted Information" />  
         <put-attribute name="body" value="/WEB-INF/views/my_mobile_posts.jsp" />  
     </definition>
-    
+      
+    <!-- posing view menu sub category list -->
     <definition name="show_subcat_list" extends="base.definition">  
         <put-attribute name="title" value="Post Adds page View" />
         <put-attribute name="menu" value="/WEB-INF/views/postadsview.jsp" />  
@@ -94,6 +97,11 @@
         <put-attribute name="body" value="/WEB-INF/views/mobilestablet.jsp" />  
     </definition>
     
+   <!--  forgot password success page  -->
+    <definition name="success_forgotpawword" extends="base.definition">  
+        <put-attribute name="title" value="ForgotPassword success View" />  
+        <put-attribute name="body" value="/WEB-INF/views/forgotpasswordsuccess.jsp" />  
+    </definition>
     
      <definition name="mobilephoneview" extends="base.definition2">  
         <put-attribute name="title" value="Mobiletablets View" />  
@@ -111,4 +119,21 @@
         <put-attribute name="title" value="Mobiletablets View" />  
         <put-attribute name="body" value="/WEB-INF/views/final_mobilephone_view.jsp" />  
     </definition>
+    
+    <!-- this is for Accesories form page view  -->
+  
+     <definition name="accessory" extends="base.definition2">  
+        <put-attribute name="title" value="Accessory form View" /> 
+        <put-attribute name="menu" value="/WEB-INF/views/show_subcat_list.jsp" /> 
+        <put-attribute name="body" value="/WEB-INF/views/accessory.jsp" />  
+    </definition>
+      
+    <!-- this is for Tablets form page view  -->
+  
+     <definition name="tablets" extends="base.definition">  
+        <put-attribute name="title" value="Tablets form View" />  
+        <put-attribute name="menu" value="/WEB-INF/views/show_subcat_list.jsp" />
+        <put-attribute name="body" value="/WEB-INF/views/tablets.jsp" />  
+    </definition>
+    
 </tiles-definitions>  

@@ -1,15 +1,27 @@
-<link rel="stylesheet" type="text/css" href="resources/js/jquery-ui.css">
-<h2 class="text-center">Reset Password</h2>
-<div class="login-page">
-	<div class="form">
-	  <form class="login-form">
-	    <input type="text" name="username"  placeholder="Enter email Address"/>
-	     <input type="password" name="password1" placeholder="Enter Old Password"/>
-	     <input type="password" name="password2" placeholder="Enter New Password"/> 
-	      <input type="password" name="password3" placeholder="Confirm password Password"/>
-	    <button type="submit">Submit</button>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.css" />">
+<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/jquery-ui.css" />">
+<script src="<c:url value="/resources/js/bootstrap.js"/>"></script>
+
+
+
+
+
+<h2 class="text-center">Forgot Password</h2>
+
+<div class="container-well" style="width:550px;">	
+	  <form  action="forgotpasswordAction" method="post">
+	  <div class="form-group">
+	  <label>Enter Username or Email</label>
+	       <input type="email" name="username" id="username" class="form-comtrol"  placeholder="Enter email Address"/>
+	    </div>
+	    <div class="form-group">
+	    <label>Enter new Password</label>
+	       <input type="password" name="password" id="password" class="form-comtrol" placeholder="Enter New Password"/> 
+	    </div> 
+	    
+	    <input type="submit" value="Submit" class="btn btn-primary btn-block">
       </form>
 	</div>
-</div>
-<script type="text/javascript" src="resources/js/jquery-ui.js"></script>
+
 

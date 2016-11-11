@@ -5,7 +5,7 @@ public class MobilePostedInfo
 	
 	
 
-	private int mobile_adv_id;
+	private String mobile_adv_id;
 	private String xpectmobiprice;
 	private String mobibrand;
 	private String mobimodel;
@@ -67,11 +67,11 @@ public class MobilePostedInfo
 	}
 
 	
-	public int getMobile_adv_id() {
+	public String getMobile_adv_id() {
 		return mobile_adv_id;
 	}
 
-	public void setMobile_adv_id(int mobile_adv_id) {
+	public void setMobile_adv_id(String mobile_adv_id) {
 		this.mobile_adv_id = mobile_adv_id;
 	}
 

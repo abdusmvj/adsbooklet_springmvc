@@ -8,6 +8,8 @@ import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.app.adsbooklet.dao.UserLoginDao;
 import com.app.adsbooklet.dao.UserPopulatedDao;
 import com.app.adsbooklet.model.District;
 import com.app.adsbooklet.model.UserLoginCredential;
@@ -28,12 +31,12 @@ import com.app.adsbooklet.services.UserLoginService;
 @RequestMapping("/")
 public class LoginController 
 {
+	private static final Logger logger = LoggerFactory
+			.getLogger(UserLoginDao.class);
 	
-	@Autowired
-	UserLoginService userLoginService;
-	
-	@Autowired
-	UserPopulatedDao userPopulatedDao;
+	@Autowired UserLoginService userLoginService;
+	@Autowired UserLoginDao userLoginDao;
+	@Autowired UserPopulatedDao userPopulatedDao;
 	
 	 @RequestMapping(value ="/signin")  
     public ModelAndView showSignin() {  
@@ -52,10 +55,30 @@ public class LoginController
 			return "redirect:/signin";
 		}
 	 
-	 @RequestMapping("/forgotPassword")
+	 @RequestMapping(value="/forgotPassword")
 		public ModelAndView forgotPassword() {
-			return new ModelAndView("forgotPasswordview", "command", null);
+			return new ModelAndView("forgotPasswordview");
 		}
+	 
+	 @RequestMapping(value="/forgotpasswordAction", method=RequestMethod.POST)
+		public String  forgotPasswordAction(@RequestParam("username") String uname,
+				                           @RequestParam("password") String pass,
+				                            HttpServletRequest request) 
+	 {
+		    //String uname=request.getParameter("username");
+		   // String pass=request.getParameter("password");
+		 logger.info("forgot pass controller");
+		 logger.info(uname);
+		    userLoginDao.getForgetPassword(uname, pass);
+			return "redirect:/success_forgotpassword";
+		}
+	 
+	 @RequestMapping(value="/success_forgotpassword")
+		public ModelAndView viewForgotPassword(HttpServletRequest request) {
+		    request.setAttribute("fg_msg", "Your forgotten password updated succefully");
+			return new ModelAndView("success_forgotpawword");
+		}
+	 
 
 	@RequestMapping(value = "/userauth", method = RequestMethod.POST)
 	public String checkCredentials(@RequestParam("username") String username,

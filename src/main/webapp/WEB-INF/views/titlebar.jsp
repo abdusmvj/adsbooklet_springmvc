@@ -10,7 +10,7 @@
         </div>
         <ul class="nav navbar-nav">
             <li class="active"><a href="<c:url value="/home" />">Home</a></li>
-            <li style="background-color:aqua; width: 120px;"><a href="postads"><b>Post Ads</b></a></li>
+            <li style="background-color:aqua; width: 120px;"><a href="<c:url value="/postads" />"><b>Post Ads</b></a></li>
             <li><a href="contactus">Contact Us</a></li>
         </ul>
 

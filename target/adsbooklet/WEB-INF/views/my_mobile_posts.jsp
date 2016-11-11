@@ -26,7 +26,6 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="post" items="${myposts}" >
 			
 			<tr>
 				<th>Your Name:</th>
@@ -66,8 +65,10 @@
 				<td>${post.address}</td>
 			</tr>
 			
-			
-			</c:forEach>
+			<tr>
+				<th>Image:</th>
+				<td><img src='<c:url value="/showImage/" />${post.mobile_adv_id}' ></td>
+			</tr>
 		</tbody>
 		
 		</table>

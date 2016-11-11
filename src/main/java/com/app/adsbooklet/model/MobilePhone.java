@@ -2,11 +2,11 @@ package com.app.adsbooklet.model;
 
 public class MobilePhone 
 {
-	private int mobile_adv_id;
-	public int getMobile_adv_id() {
+	private String mobile_adv_id;
+	public String getMobile_adv_id() {
 		return mobile_adv_id;
 	}
-	public void setMobile_adv_id(int mobile_adv_id) {
+	public void setMobile_adv_id(String mobile_adv_id) {
 		this.mobile_adv_id = mobile_adv_id;
 	}
 	private String imageid;

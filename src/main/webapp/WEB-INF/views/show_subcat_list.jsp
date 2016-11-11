@@ -6,7 +6,7 @@
   <c:if test="${not empty subcatvalue}">
       <ul class="nav nav-pills nav-stacked">
        <c:forEach var="subcategory_list" items="${subcatvalue}" >
-  	         <li ><a href="<c:url value=""/>" style="width:180px; background-color:lightgreen;">${subcategory_list.name}</a></li>
+  	         <li ><a href="<c:url value="/"/>${subcategory_list.form_name}" style="width:180px; background-color:lightgreen;">${subcategory_list.name}</a></li>
   	    </c:forEach>
       </ul>
   </c:if>

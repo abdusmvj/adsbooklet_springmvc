@@ -14,12 +14,15 @@ import com.app.adsbooklet.model.MobilePhone;
 import com.app.adsbooklet.model.MobilePostedInfo;
 import com.app.adsbooklet.model.SellerBuyerInfo;
 import com.app.adsbooklet.model.UserDetails;
+import com.app.adsbooklet.util.SequenceGenerator;
 
 @Component
 public class AdsbookletDao
 {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
+	
+	@Autowired private SequenceGenerator sequenceGenerator;
 	
 	public JdbcTemplate getJdbcTemplate() {
 		return jdbcTemplate;
@@ -80,14 +83,12 @@ public class AdsbookletDao
 	  }
 	
 	
-	public int saveMobilePhone(MobilePhone mp,int userId)
+	public String saveMobilePhone(MobilePhone mp,int userId)
 	  {  			 
 			   System.out.println("hi.........kkkkkk");
-			  // String sql="insert into post_mobile_section values(null,'"+mp.getImageid()+"','"+mp.getMobileadTitle()+"','"+mp.getTypeofAd()+"','"+mp.getMobicondition()+"','"+mp.getActualprice()+"','"+mp.getXpectmobiprice()+"','"+mp.getMobibrand()+"','"+mp.getMobimodel()+"','"+mp.getMobiOS()+"','"+mp.getMobisimNo()+"','"+mp.getMobidescription()+"','"+mp.getPost_date()+"',"+userId+")";
-		//String sql="insert into post_mobile_section values(null,'"+mp.getImageid()+"','"+mp.getMobileadTitle()+"','"+mp.getTypeofAd()+"','"+mp.getMobicondition()+"','"+mp.getActualprice()+"','"+mp.getXpectmobiprice()+"','"+mp.getMobibrand()+"','"+mp.getMobimodel()+"','"+mp.getMobiOS()+"','"+mp.getMobisimNo()+"','"+mp.getMobidescription()+"','"+mp.getPost_date()+"','userId')";
-			String sql = "INSERT INTO post_mobile_section SET "
-						
-						+ "image_id = ?,"
+			 String sql = "INSERT INTO post_mobile_section SET "
+						+ "mobile_adv_id = ?,"
+//						+ "image_id = ?,"
 						+ "mobile_title = ?,"
 						+ "type_of_add = ?,"
 						+ "mobile_condition = ?,"
@@ -100,9 +101,10 @@ public class AdsbookletDao
 						+ "description = ?,"
 						+ "posting_date = ?,"
 						+ "user_id = ?";
+			 	String insert_id = sequenceGenerator.getSequence("AD");
 				Object params[] = { 
-						
-						mp.getImageid(),
+						insert_id,
+//						mp.getImageid(),
 						mp.getMobileadTitle(),
 						mp.getTypeofAd(),
 						mp.getMobicondition(),
@@ -117,17 +119,20 @@ public class AdsbookletDao
 						userId
 						}; 
 				System.out.println(sql);
+				int row = 0;
 				try {
-					//int row = jdbcTemplate.update(sql,params);
-					//System.out.println(row +" row inserted!");
+					System.out.println("hi.........");
+					   
+					System.out.println(sql);
+				   row = jdbcTemplate.update(sql,params); 
+				   sequenceGenerator.updateSequence("AD");
+				   return insert_id;
 				} catch (Exception e) {
 				    System.out.println("exception at AdsBookletDao.insert(MobilePhoneInfo)"+ e.getMessage());
+				    return null;
 				}
 			   
-			   System.out.println("hi.........");
 			   
-				System.out.println(sql);
-			   return jdbcTemplate.update(sql,params); 
 			      	
 	  }
 	
@@ -155,7 +160,7 @@ public class AdsbookletDao
 		try {
 			return jdbcTemplate.queryForObject(sql, (ResultSet rs, int row) -> {
 				MobilePostedInfo mpi = new MobilePostedInfo();
-				mpi.setMobile_adv_id(rs.getInt("mobile_adv_id"));
+				mpi.setMobile_adv_id(rs.getString("mobile_adv_id"));
 				mpi.setActualprice(rs.getString("actual_price"));
 				mpi.setXpectmobiprice(rs.getString("exp_price"));
 				mpi.setMobibrand(rs.getString("brand"));

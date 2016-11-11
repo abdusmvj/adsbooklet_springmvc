@@ -3,9 +3,9 @@
 <body>
 <h2>Upload File</h2>
 
-<form method="post" action="<c:url value="/uploadFile"/>" enctype="multipart/form-data">
+<form method="post" action="<c:url value="/uploadfile"/>" enctype="multipart/form-data">
 	<label>Upload Image file</label>
-	<input type="file" name="file">
+	Select File:<input type="file" name="file">
 	<input type="submit" value="submit">
 </form>
 

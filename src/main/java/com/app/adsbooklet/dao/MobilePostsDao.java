@@ -56,17 +56,17 @@ public class MobilePostsDao {
 		}
 	}
 	
-	public List<MobilePostedInfo> getAll(int id) {
+	public MobilePostedInfo getByAdId(String id) {
 		//String sql = "SELECT * FROM post_mobile_section";
 		//String sql = "SELECT * FROM post_mobile_section WHERE user_id = ?";
-		String sql="select a.user_fullname, a.user_mobile, a.user_name,a.user_address, "
-				+ "b.image_id,b.mobile_title,b.type_of_add,b.mobile_condition,b.actual_price,b.exp_price,b.model,b.os,b.no_of_sim,b.posting_date,b.description, b.user_id "
+		String sql="select a.user_fullname, a.user_mobile, a.user_name,a.user_address,"
+				+ "b.mobile_adv_id,b.mobile_title,b.type_of_add,b.mobile_condition,b.actual_price,b.exp_price,b.model,b.os,b.no_of_sim,b.posting_date,b.description, b.user_id "
 				+ "from user_profile as a inner join post_mobile_section as b "
-				+ "ON a.user_id=b.user_id WHERE b.user_id=?";
+				+ "ON a.user_id=b.user_id WHERE b.mobile_adv_id=?";
 		try {
-			return jdbcTemplate.query(sql,new Object[] { id },(ResultSet rs, int row) -> {
+			return jdbcTemplate.queryForObject(sql, new Object[] { id }, (ResultSet rs, int row) -> {
 				MobilePostedInfo mpi = new MobilePostedInfo();
-			
+				mpi.setMobile_adv_id(rs.getString("mobile_adv_id"));
 				mpi.setMobiOS(rs.getString("os"));
 				//mpi.setName(rs.getString("brand"));
 				mpi.setActualprice(rs.getString("actual_price"));
@@ -84,7 +84,7 @@ public class MobilePostsDao {
 				return mpi;
 			});
 		} catch (Exception e) {
-			System.out.println("exceptin at MobilePostsDao.getAll()"+e.getMessage());
+			System.out.println("exceptin at MobilePostsDao.getByAdId(String id)"+e.getMessage());
 			return null;
 		}
 	}
@@ -99,6 +99,7 @@ public class MobilePostsDao {
 				sb.setId(rs.getInt("classified_sub_category_id"));
 				sb.setMainCategoryId(rs.getInt("classified_category_id"));
 				sb.setName(rs.getString("classified_sub_category_name"));
+				sb.setForm_name(rs.getString("form_name"));
 				return sb;
 			});
 		} catch (Exception e) {
